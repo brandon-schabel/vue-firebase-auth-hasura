@@ -36,11 +36,11 @@ export const store = new Vuex.Store({
     setUser: context => {
       context.commit('setUser')
     },
-    setUserToken: context => {
-      context.commit('setToken')
+    setUserToken: (context, token) => {
+      context.commit('setToken', token)
     },
-    setUserStatus: context => {
-      context.commit('setUserStatus')
+    setUserStatus: (context, status) => {
+      context.commit('setUserStatus', status)
     }
   }
 })
