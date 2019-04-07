@@ -4,7 +4,7 @@ import { auth } from '../firebase'
 
 Vue.use(Vuex)
 
-export const store = new Vuex.Store({
+export default new Vuex.Store({
   state: {
     user: null,
     token: null,

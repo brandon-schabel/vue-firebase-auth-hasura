@@ -1,23 +1,21 @@
 <template>
-  <q-btn @click="signOut">Sign Out</q-btn>
+  <button @click="signOut">Sign Out</button>
 </template>
 
 <script>
 import { auth } from '../firebase'
-import { mapState } from 'vuex';
+import { mapMutations } from 'vuex'
 
 export default {
   name: 'SignOutButton',
-  computed: {
-    ...mapState()
-  },
   methods: {
+    ...mapMutations(['setUserStatus', 'setUserToken']),
     signOut: async function() {
       try {
-        this.setStatus('loading')
-        this.setToken(null)
+        this.setUserStatus('loading')
+        this.setUserToken(null)
         await auth.signOut().then(() => {
-          this.setStatus('out')
+          this.setUserStatus('out')
           this.$router.push('sign-in')
         })
       } catch (error) {

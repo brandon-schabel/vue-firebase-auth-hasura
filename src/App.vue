@@ -1,27 +1,23 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <router-view />
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
-import {auth, db} from './firebase'
-import { mapState } from 'vuex'
-
+import { auth, db } from './firebase'
+import { mapMutations } from 'vuex'
 
 export default {
   name: 'app',
-  components: {
-    HelloWorld
-  },
   methods: {
-  },
-  computed: {
-    ...mapState()
+    ...mapMutations(['setUserToken', 'setUserStatus']),
+    setUser: function() {
+      this.$store.dispatch('setUser')
+    }
   },
   created() {
+    this.setUser()
     auth.onAuthStateChanged(async user => {
       if (user) {
         const token = await user.getIdToken()
@@ -29,8 +25,8 @@ export default {
         const hasuraClaim = idTokenResult.claims['https://hasura.io/jwt/claims']
 
         if (hasuraClaim) {
-          this.setToken(token)
-          this.setStatus('in')
+          this.setUserToken(token)
+          this.setUserStatus('in')
         } else {
           const metadataRef = db.collection('metadata').doc(user.uid)
 
@@ -39,12 +35,12 @@ export default {
             .then(async doc => {
               if (doc.exists && doc.data().refreshTime) {
                 const token = await user.getIdToken(true)
-                this.setToken(token)
-                this.setStatus('in')
+                this.setUserToken(token)
+                this.setUserStatus('in')
               } else {
                 // console.log('Refresh time doesnt exist')
-                this.setToken(null)
-                this.setStatus('out')
+                this.setUserToken(null)
+                this.setUserStatus('out')
               }
             })
             .catch(error => {
@@ -58,5 +54,4 @@ export default {
 </script>
 
 <style>
-
 </style>

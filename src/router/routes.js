@@ -1,40 +1,40 @@
-import SignInPage from 'pages/SignInPage.vue'
-import SignUpPage from 'pages/SignUpPage.vue'
-import Error404 from 'pages/Error404.vue'
-import Dashboard from 'pages/Dashboard.vue'
-import MyLayout from 'layouts/MyLayout.vue'
-import Index from 'pages/Index.vue'
+import SignInPage from '../pages/SignInPage.vue'
+import SignUpPage from '../pages/SignUpPage.vue'
+import Error404 from '../pages/Error404.vue'
+import Dashboard from '../pages/Dashboard.vue'
+import Layout from '../layouts/'
+import IndexPage from '../pages/IndexPage.vue'
 
 const routes = [
   {
     path: '/',
-    component: MyLayout,
-    children: [{ path: '', component: Index }]
+    component: Layout,
+    children: [{ path: '', component: IndexPage }]
   },
   {
     path: '/',
-    component: MyLayout,
+    component: Layout,
     children: [{ path: '/dashboard', component: Dashboard }],
     meta: { requiresAuth: true }
   },
   {
     path: '/',
-    component: MyLayout,
+    component: Layout,
     children: [{ path: '/sign-in', component: SignInPage }]
   },
   {
     path: '/',
-    component: MyLayout,
+    component: Layout,
     children: [{ path: '/sign-up', component: SignUpPage }]
   },
   {
     path: '/',
-    component: MyLayout,
+    component: Layout,
     children: [{ path: '/404', component: Error404 }]
   },
   {
     path: '/',
-    component: MyLayout,
+    component: Layout,
     children: [{ path: '*', component: Error404 }]
   },
   {
